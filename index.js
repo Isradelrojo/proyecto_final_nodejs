@@ -4,14 +4,23 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 
 
+import productsRouter from "./src/products-router.js";
+
+
+
 dotenv.config();
 
 const app = express();
+
+
 
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use("/api/products", productsRouter);
+
 
 app.use((req, res, next)=>{
     res.status(404).json({
