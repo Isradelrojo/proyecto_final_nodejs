@@ -23,3 +23,13 @@ export const getProductById = (req, res) => {
         res.status(404).json({ message: "Producto no encontrado" });
     };
 };
+
+export const createProduct = (req, res) => {
+    const { name, price } = req.body;
+    const newProduct = {};
+    newProduct.id = products.length + 1;
+    newProduct.name = name; 
+    newProduct.price = price;
+    products.push(newProduct);
+    res.status(201).json(newProduct);
+};
