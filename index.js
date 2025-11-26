@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 
 
-import productsRouter from "./src/products-router.js";
+import productsRouter from "./src/routes/products-router.js";
+import usersRouter from "./src/routes/users-router.js";
 
 
 
@@ -19,7 +20,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/api/products", productsRouter);
+app.use("/api", productsRouter);
+app.use("/api", usersRouter);
 
 
 app.use((req, res, next)=>{
