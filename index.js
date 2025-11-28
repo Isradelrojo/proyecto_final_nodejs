@@ -6,6 +6,9 @@ import bodyParser from "body-parser";
 
 import productsRouter from "./src/routes/products-router.js";
 import usersRouter from "./src/routes/users-router.js";
+import authRouter from "./src/routes/auth.router.js";   
+import { badRoute } from "./src/middlewares/bad_route.middleware.js";
+
 
 
 
@@ -15,21 +18,17 @@ const app = express();
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/api", productsRouter);
 app.use("/api", usersRouter);
+app.use("/api/auth", authRouter);
 
 
-app.use((req, res, next)=>{
-    res.status(404).json({
-        "message":"Ruta no encontrada",
-        "error":"La ruta requerida no es valida."
-    })
-});
+app.use(badRoute);
 
 app.listen(PORT, ()=>{
     console.log(`Servidor en puerto ${PORT}`);
