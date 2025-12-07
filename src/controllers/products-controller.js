@@ -1,5 +1,7 @@
 import { products } from '../models/products.model.js';
 import * as model from '../models/products.model.js';
+import authRouter from '../routes/auth.router.js';
+
 // import fs from 'fs';    
 // import path from 'path';
 
