@@ -18,14 +18,14 @@ export const getAllProducts = async (req, res) => {
     res.status(200).json(productsData);
 };
 
-export const getProductById = (req, res) => {
-    const { id } = req.params;
-    const product = products.find(p => p.id === parseInt(id));  
-    if (product) {
-        res.status(200).json(product);
-    } else {
-        res.status(404).json({ message: "Producto no encontrado" });
-    };
+
+export const getProductById = async (req, res) => {
+  const { id } = req.params;
+  const product = await model.getProductById(id);
+  if (!product) {
+    return res.status(404).json({ error: "Not Found" });
+  }
+  res.json(product);
 };
 
 export const createProduct = async (req, res) => {
