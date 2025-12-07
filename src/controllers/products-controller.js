@@ -1,17 +1,21 @@
-
-const products = [
-    { id: 1, name: "Producto 1", price: 100 },
-    { id: 2, name: "Producto 2", price: 200 },
-    { id: 3, name: "Producto 3", price: 300 }
-];
+import { products } from '../models/products.model.js';
+import * as model from '../models/products.model.js';
+// import fs from 'fs';    
+// import path from 'path';
 
 
-export const getAllProducts = (req, res) => {
-    if (products.length === 0) {
-        return res.status(200).json({ message: "No hay productos disponibles" });
+// const __dirname = import.meta.dirname;
+
+// console.log("DIRNAME", __dirname);
+
+export const getAllProducts = async (req, res) => {
+    if (products === 0) {
+        return await res.status(400).json({ message: "No hay productos disponibles" });
 
     }
-    res.status(200).json(products);
+    const productsData = await products();
+    //console.log('Products data in controller:', productsData);
+    res.status(200).json(productsData);
 };
 
 export const getProductById = (req, res) => {
@@ -24,12 +28,15 @@ export const getProductById = (req, res) => {
     };
 };
 
-export const createProduct = (req, res) => {
-    const { name, price } = req.body;
-    const newProduct = {};
-    newProduct.id = products.length + 1;
-    newProduct.name = name; 
-    newProduct.price = price;
-    products.push(newProduct);
-    res.status(201).json(newProduct);
+export const createProduct = async (req, res) => {
+  if (typeof req.body.name == undefined) {
+    return res.status(422).json({ error: "El nombre es obligatorio" });
+  }
+
+  const { name, price, categories } = req.body;
+
+  const product = await model.createProduct({ name, price, categories });
+
+  res.status(201).json(product);
 };
+
