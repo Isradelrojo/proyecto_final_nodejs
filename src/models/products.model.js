@@ -6,8 +6,8 @@ const productsCollection = collection(db, 'productos');
 export const products = async () => {
 
         const snapshot = await getDocs(productsCollection);
-        const productos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) ;
-        return productos;
+        return snapshot.docs.map(doc => ({ id: snapshot.id, ...doc.data() })) ;
+        
 };
 
 

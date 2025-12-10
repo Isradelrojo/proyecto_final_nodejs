@@ -7,7 +7,8 @@ import { users } from '../models/user.model.js';
 import * as model from '../models/user.model.js';
 
 
-export const getAllUsers = (req, res) => {
+export const getAllUsers = async (req, res) => {
+    const users = await model.users();
     if (users.length === 0) {
         return res.status(400).json({ message: "No hay usuarios disponibles" });   
     }
@@ -16,7 +17,7 @@ export const getAllUsers = (req, res) => {
 
 export const getUserById = async (req, res) => {
   const { id } = req.params;
-  const user = await model.getUserById(id);
+  const user = await model.getUsersById(id);
   if (!user) {
     return res.status(404).json({ error: "Not Found" });
   }
